@@ -312,7 +312,7 @@ func runStore(args []string) error {
 				}
 			}()
 			mux.Handle("/store/", http.StripPrefix("/store", api))
-			mux.Handle("/ui/", ui.NewAPI(logger, *uiLocal))
+			mux.Handle("/ui/", http.StripPrefix("/ui", ui.NewAPI(logger, *uiLocal)))
 			registerMetrics(mux)
 			registerProfile(mux)
 			return http.Serve(apiListener, cors.Default().Handler(mux))
